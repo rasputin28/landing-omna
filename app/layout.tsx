@@ -13,13 +13,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "OMNA — Escalamos tu negocio sin aumentar tu equipo",
+  title: "OMNA — Omnipresent Technology, Applied",
   description:
-    "Diseñamos sistemas tecnológicos a la medida que conectan procesos, eliminan fricción y le dan a tu equipo tiempo para crecer. +150 implementaciones en 9 países.",
+    "Implementamos inteligencia artificial en empresas de manufactura y distribucion. No vendemos tecnologia, resolvemos problemas operativos.",
   openGraph: {
-    title: "OMNA — Escalamos tu negocio sin aumentar tu equipo",
+    title: "OMNA — Omnipresent Technology, Applied",
     description:
-      "Diseñamos sistemas tecnológicos a la medida que conectan procesos, eliminan fricción y le dan a tu equipo tiempo para crecer.",
+      "Implementamos inteligencia artificial en empresas de manufactura y distribucion con impacto medible.",
     type: "website",
     locale: "es_MX",
   },

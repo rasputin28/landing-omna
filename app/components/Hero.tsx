@@ -70,14 +70,13 @@ export default function Hero() {
 
       <div className="relative z-10 max-w-4xl mx-auto text-center">
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight animate-fade-in-up">
-          Escalamos tu negocio{" "}
-          <span className="text-accent">sin aumentar tu equipo</span>{" "}
-          ni tu carga operativa
+          Hay tareas en tu operacion que la IA ya resuelve.{" "}
+          <span className="text-accent">Tu equipo todavia las hace a mano.</span>
         </h1>
 
         <p className="mt-6 text-lg sm:text-xl text-muted max-w-2xl mx-auto animate-fade-in-up animation-delay-200">
-          Diseñamos sistemas tecnológicos a la medida que conectan procesos,
-          eliminan fricción y le dan a tu equipo tiempo para crecer.
+          Modernizamos tu empresa con inteligencia artificial, bajando costos,
+          subiendo ventas y reduciendo el trabajo manual.
         </p>
 
         <a

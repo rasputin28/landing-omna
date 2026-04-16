@@ -4,11 +4,10 @@ import { useState, type FormEvent } from "react";
 
 export default function ContactForm() {
   const [form, setForm] = useState({
-    firstName: "",
-    lastName: "",
+    industry: "",
+    problem: "",
+    name: "",
     phone: "",
-    email: "",
-    organization: "",
     consentNonMarketing: false,
     consentMarketing: false,
   });
@@ -26,11 +25,14 @@ export default function ContactForm() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            firstName: form.firstName,
-            lastName: form.lastName,
+            firstName: form.name,
+            lastName: "",
             phone: form.phone,
-            email: form.email,
-            companyName: form.organization,
+            email: "",
+            companyName: form.industry,
+            customData: {
+              problem: form.problem,
+            },
             tags: ["landing-page-lead"],
           }),
         });
@@ -39,7 +41,6 @@ export default function ContactForm() {
         setStatus("error");
       }
     } else {
-      // eslint-disable-next-line no-console
       console.log("Form submission (no GHL webhook configured):", form);
       setStatus("sent");
     }
@@ -70,82 +71,68 @@ export default function ContactForm() {
     <section id="contacto" className="py-24 px-6">
       <div className="max-w-xl mx-auto">
         <h2 className="text-3xl sm:text-4xl font-bold text-center">
-          ¿Tu empresa está lista para escalar?
+          Si tu operacion frena tu crecimiento, vale la pena una conversacion
         </h2>
         <p className="mt-3 text-center text-lg text-muted">
-          Te contactamos en menos de 24 horas
+          Cuentanos tu caso y te contactamos en menos de 24 horas
         </p>
 
         <form onSubmit={handleSubmit} className="mt-10 space-y-5">
-          <div className="grid sm:grid-cols-2 gap-5">
-            <div>
-              <label htmlFor="firstName" className="block text-sm font-medium mb-1.5">
-                Nombre
-              </label>
-              <input
-                id="firstName"
-                type="text"
-                placeholder="Nombre"
-                value={form.firstName}
-                onChange={(e) => update("firstName", e.target.value)}
-                className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm text-foreground placeholder:text-muted/60 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition"
-              />
-            </div>
-            <div>
-              <label htmlFor="lastName" className="block text-sm font-medium mb-1.5">
-                Apellidos
-              </label>
-              <input
-                id="lastName"
-                type="text"
-                placeholder="Apellidos"
-                value={form.lastName}
-                onChange={(e) => update("lastName", e.target.value)}
-                className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm text-foreground placeholder:text-muted/60 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition"
-              />
-            </div>
+          <div>
+            <label htmlFor="industry" className="block text-sm font-medium mb-1.5">
+              A que se dedica tu empresa
+            </label>
+            <input
+              id="industry"
+              type="text"
+              required
+              placeholder="Ej: Distribuidora de materiales"
+              value={form.industry}
+              onChange={(e) => update("industry", e.target.value)}
+              className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm text-foreground placeholder:text-muted/60 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="problem" className="block text-sm font-medium mb-1.5">
+              Cual es el principal problema que quieres resolver
+            </label>
+            <textarea
+              id="problem"
+              required
+              placeholder="Describe el cuello de botella mas importante hoy"
+              value={form.problem}
+              onChange={(e) => update("problem", e.target.value)}
+              className="w-full min-h-28 rounded-xl border border-border bg-surface px-4 py-3 text-sm text-foreground placeholder:text-muted/60 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="name" className="block text-sm font-medium mb-1.5">
+              Nombre <span className="text-accent">*</span>
+            </label>
+            <input
+              id="name"
+              type="text"
+              required
+              placeholder="Tu nombre completo"
+              value={form.name}
+              onChange={(e) => update("name", e.target.value)}
+              className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm text-foreground placeholder:text-muted/60 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition"
+            />
           </div>
 
           <div>
             <label htmlFor="phone" className="block text-sm font-medium mb-1.5">
-              Teléfono <span className="text-accent">*</span>
+              WhatsApp <span className="text-accent">*</span>
             </label>
             <input
               id="phone"
               type="tel"
               required
-              placeholder="Teléfono"
+              placeholder="+52 55 0000 0000"
               value={form.phone}
               onChange={(e) => update("phone", e.target.value)}
-              className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm text-foreground placeholder:text-muted/60 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium mb-1.5">
-              Email <span className="text-accent">*</span>
-            </label>
-            <input
-              id="email"
-              type="email"
-              required
-              placeholder="Email"
-              value={form.email}
-              onChange={(e) => update("email", e.target.value)}
-              className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm text-foreground placeholder:text-muted/60 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="organization" className="block text-sm font-medium mb-1.5">
-              Organización / Empresa
-            </label>
-            <input
-              id="organization"
-              type="text"
-              placeholder="Empresa"
-              value={form.organization}
-              onChange={(e) => update("organization", e.target.value)}
               className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm text-foreground placeholder:text-muted/60 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition"
             />
           </div>
@@ -188,7 +175,7 @@ export default function ContactForm() {
             disabled={status === "sending"}
             className="w-full rounded-full bg-accent py-4 text-base font-semibold text-white transition-all hover:bg-accent-hover hover:scale-[1.02] disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            {status === "sending" ? "Enviando..." : "PONERME EN CONTACTO"}
+            {status === "sending" ? "Enviando..." : "Enviar"}
           </button>
 
           {status === "error" && (

@@ -5,26 +5,26 @@ import { useEffect, useRef, useState } from "react";
 const phases = [
   {
     number: "01",
-    title: "Diagnóstico",
-    subtitle: "$27,000 MXN · 14 días",
+    title: "Exploramos tu operacion",
+    subtitle: "Entender antes de construir",
     description:
-      "Mapeamos tu operación completa, identificamos riesgos reales y encontramos oportunidades de digitalización que quizás ni sabías que existían. Te mostramos el potencial exacto de tu empresa.",
+      "Nos metemos a entender tus procesos, sistemas desconectados y cuellos de botella para priorizar lo que mas impacto genera.",
     accent: true,
   },
   {
     number: "02",
-    title: "Plan de proyecto",
-    subtitle: "Ya tienes el plan, el resto es tu decisión",
+    title: "Implementamos con tu equipo",
+    subtitle: "Ejecucion enfocada en impacto",
     description:
-      "Con tus resultados, te construimos un plan de acción completo: qué automatizar primero, en qué orden, cuánto cuesta y cuánto puedes ganar. Te vas con un roadmap claro de cómo escalar tu empresa.",
+      "Construimos y conectamos soluciones reales sobre tu operacion, sin romper lo que ya funciona ni agregar complejidad innecesaria.",
     accent: false,
   },
   {
     number: "03",
-    title: "Ejecución",
-    subtitle: "Hasta el go live",
+    title: "Capacitamos y transferimos",
+    subtitle: "Autonomia interna con partners especializados",
     description:
-      "Implementamos, documentamos y capacitamos a tu equipo. SOPs, manuales y bootcamp de cierre incluidos. No dependes de nosotros para operar. Eso es intencional.",
+      "Capacitamos a tu equipo y transferimos conocimiento con partners especializados para que la operacion quede dentro de tu empresa.",
     accent: false,
   },
 ];
@@ -45,13 +45,13 @@ export default function Methodology() {
   }, []);
 
   return (
-    <section ref={ref} className="py-24 px-6 bg-surface/40">
+    <section id="como-trabajamos" ref={ref} className="py-24 px-6 bg-surface/40">
       <div className="max-w-6xl mx-auto">
         <p className="text-sm font-semibold uppercase tracking-widest text-accent text-center mb-3">
-          Metodología
+          Como trabajamos
         </p>
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center">
-          3 Fases: Del Diagnóstico al Go Live
+          Exploramos, implementamos y capacitamos
         </h2>
 
         <div className="mt-16 grid md:grid-cols-3 gap-8">

@@ -4,43 +4,43 @@ import { useEffect, useRef, useState } from "react";
 
 const cases = [
   {
-    tag: "Manufactura B2B",
-    title: "La fabricante que no podía salir de cuatro estados",
-    pain: "Expansión frenada, cero presencia digital, desarrollo lento",
+    tag: "Distribucion",
+    title: "Pedidos que antes tardaban horas en capturarse, ahora se procesan solos",
+    pain: "Equipos capturando pedidos manuales y cuellos de botella al cierre de mes.",
     metrics: [
-      { value: "7x", label: "Alcance comercial" },
-      { value: "10x", label: "Velocidad de desarrollo" },
-      { value: "< 30 días", label: "Recuperación inversión" },
+      { value: "-95%", label: "Tiempo de captura" },
+      { value: "24/7", label: "Operacion continua" },
+      { value: "< 6 meses", label: "ROI estimado" },
     ],
   },
   {
-    tag: "Distribución · SAP",
-    title: "La distribuidora que dejaba dinero en la mesa cada mes",
-    pain: "70% pedidos manuales, $400K MXN en errores de fletera en Q1",
+    tag: "Finanzas operativas",
+    title: "Discrepancias de facturas detectadas automaticamente",
+    pain: "Cobros incorrectos de fleteras pasaban desapercibidos durante meses.",
     metrics: [
-      { value: "$1.6M", label: "MXN ahorro anual" },
-      { value: "−95%", label: "Tiempo en logística" },
-      { value: "< 3 meses", label: "Recuperación inversión" },
+      { value: "100s de miles", label: "Monto recuperado" },
+      { value: "Minutos", label: "Tiempo de revision" },
+      { value: "Mensual", label: "Control continuo" },
     ],
   },
   {
-    tag: "Consumo masivo · Bebidas",
-    title: "La marca global con equipo de marketing de 3 personas",
-    pain: "Producción de contenido lenta, reportes manuales semanales",
+    tag: "Direccion general",
+    title: "Informacion financiera en tiempo real para decidir a tiempo",
+    pain: "Reportes llegaban tarde y las decisiones se tomaban con datos viejos.",
     metrics: [
-      { value: "3x", label: "Output de contenido" },
-      { value: "−85%", label: "Tiempo de lanzamiento" },
-      { value: "9 hrs", label: "Liberadas por semana" },
+      { value: "En vivo", label: "Visibilidad diaria" },
+      { value: "-80%", label: "Trabajo manual" },
+      { value: "Mejor", label: "Calidad de decision" },
     ],
   },
   {
-    tag: "Iluminación · NetSuite",
-    title: "La empresa que pagaba de más sin saberlo",
-    pain: "Órdenes de compra manuales, errores financieros no detectados",
+    tag: "Fuerza de ventas",
+    title: "Asistentes con catalogo tecnico para respuestas inmediatas",
+    pain: "Vendedores tardaban meses en dominar productos complejos.",
     metrics: [
-      { value: "−80%", label: "Tiempo conciliación" },
-      { value: "50 hrs", label: "Liberadas al mes" },
-      { value: "< 2 meses", label: "Recuperación inversión" },
+      { value: "Instantaneo", label: "Tiempo de respuesta" },
+      { value: "-70%", label: "Tiempo onboarding" },
+      { value: "+", label: "Conversion comercial" },
     ],
   },
 ];
@@ -64,10 +64,10 @@ export default function CaseStudies() {
     <section ref={ref} className="py-24 px-6">
       <div className="max-w-6xl mx-auto">
         <p className="text-sm font-semibold uppercase tracking-widest text-accent text-center mb-3">
-          Impacto real. ROI calculado.
+          Resultados
         </p>
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center max-w-3xl mx-auto">
-          Empresas que ya lo vivieron
+          Lo que cambia cuando la operacion escala bien
         </h2>
 
         <div className="mt-16 grid md:grid-cols-2 gap-8">
