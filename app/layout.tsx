@@ -14,6 +14,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://omna.ai"),
+  icons: {
+    icon: "/icon",
+    shortcut: "/icon",
+    apple: "/icon",
+  },
   title: "OMNA — Omnipresent Technology, Applied",
   description:
     "El 70% de los pedidos en distribuidoras y fabricantes B2B llegan por WhatsApp, correo o llamada. Y el 100% se capturan a mano. OMNA — Omnipresent Technology, Applied.",
