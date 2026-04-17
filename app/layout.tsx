@@ -13,6 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://omna.ai"),
   title: "OMNA — Omnipresent Technology, Applied",
   description:
     "El 70% de los pedidos en distribuidoras y fabricantes B2B llegan por WhatsApp, correo o llamada. Y el 100% se capturan a mano. OMNA — Omnipresent Technology, Applied.",
@@ -22,6 +23,21 @@ export const metadata: Metadata = {
       "No llegamos con una solución. Llegamos a entender tu negocio. Casos reales en distribución y manufactura.",
     type: "website",
     locale: "es_MX",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "OMNA - Omnipresent Technology, Applied",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "OMNA — Omnipresent Technology, Applied",
+    description:
+      "No llegamos con una solución. Llegamos a entender tu negocio. Casos reales en distribución y manufactura.",
+    images: ["/opengraph-image"],
   },
 };
 
