@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://omna.ai"),
+  metadataBase: new URL("https://omna.club"),
   icons: {
     icon: "/icon",
     shortcut: "/icon",

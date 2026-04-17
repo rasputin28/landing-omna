@@ -18,12 +18,12 @@ export default function ContactForm() {
         <p className="mt-2 text-center text-sm text-muted">
           Agenda 30 minutos →{" "}
           <a
-            href="https://omna.ai"
+            href="https://omna.club"
             className="text-accent font-medium hover:underline"
             target="_blank"
             rel="noreferrer"
           >
-            omna.ai
+            omna.club
           </a>
           <br />
           <a href="mailto:manuel@omna.ai" className="hover:text-foreground">

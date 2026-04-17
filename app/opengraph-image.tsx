@@ -45,7 +45,7 @@ export default function OpenGraphImage() {
           </div>
         </div>
         <div style={{ fontSize: 28, fontWeight: 600, color: "#1f3a2d" }}>
-          omna.ai
+          omna.club
         </div>
       </div>
     ),
