@@ -2,25 +2,33 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const team = [
+const pillars = [
   {
-    name: "Manuel",
-    role: "Fundador",
-    bio: "Ayuda a empresas establecidas a adoptar IA sin requerir un equipo tecnico interno.",
-    initial: "M",
+    title: "Entendemos primero, construimos después",
+    body:
+      "Antes de proponer nada, mapeamos tu operación real — sin suposiciones. Entrevistamos al equipo que ejecuta los procesos, no solo a la dirección.",
   },
   {
-    name: "Joel",
-    role: "CTO",
-    bio: "Lidera el analisis operativo y la implementacion tecnica de soluciones para procesos complejos.",
-    initial: "J",
+    title: "Todo proyecto sale con ROI calculado",
+    body:
+      "Sabes cuánto cuesta no resolverlo antes de saber cuánto cuesta resolverlo. Sin letra chica, sin sorpresas a la mitad del proyecto.",
+  },
+  {
+    title: "El conocimiento queda dentro de tu empresa",
+    body:
+      "Trabajamos con un AI Champion tuyo para que la transformación no dependa de nosotros. Si nos vamos, tu empresa sigue funcionando.",
+  },
+  {
+    title: "Si no somos la solución, te lo decimos",
+    body:
+      "Y te recomendamos quién sí puede ayudarte. Preferimos eso a vender un proyecto que no va a funcionar.",
   },
 ];
 
 const stats = [
   { value: "150+", label: "Proyectos" },
-  { value: "9", label: "Paises" },
-  { value: "3+", label: "Anos" },
+  { value: "9", label: "Países" },
+  { value: "3+", label: "Años" },
 ];
 
 export default function About() {
@@ -41,59 +49,40 @@ export default function About() {
   }, []);
 
   return (
-    <section id="nosotros" ref={ref} className="py-24 px-6">
+    <section id="nosotros" ref={ref} className="py-24 px-6 bg-surface/40 border-t border-border/50">
       <div className="max-w-6xl mx-auto">
         <p className="text-sm font-semibold uppercase tracking-widest text-accent text-center mb-3">
-          Nosotros
+          Por qué OMNA
         </p>
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center">
-          OMNA - Omnipresent Technology, Applied
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center max-w-3xl mx-auto leading-tight">
+          No llegamos con una solución. Llegamos a entender tu negocio.
         </h2>
 
-        <div className="mt-6 max-w-3xl mx-auto text-center text-muted space-y-4">
-          <p>
-            Implementamos inteligencia artificial en empresas de manufactura y
-            distribucion con operaciones complejas.
-          </p>
-          <p>
-            No llegamos con soluciones predefinidas. Entendemos la operacion
-            antes de tocarla, para construir sistemas que si se usan.
-          </p>
-        </div>
-
-        <div className="mt-12 grid md:grid-cols-2 gap-6">
-          {team.map((member, idx) => (
-            <article
-              key={member.name}
-              className={`rounded-2xl border border-border bg-surface/60 p-6 transition-all duration-700 ${
+        <div className="mt-14 grid md:grid-cols-2 gap-8">
+          {pillars.map((p, idx) => (
+            <div
+              key={p.title}
+              className={`rounded-2xl border border-border bg-background/60 p-8 transition-all duration-700 ${
                 visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
               }`}
-              style={{ transitionDelay: `${idx * 120}ms` }}
+              style={{ transitionDelay: `${idx * 80}ms` }}
             >
-              <div className="flex items-start gap-4">
-                <div className="h-11 w-11 rounded-lg bg-accent/20 text-accent font-bold flex items-center justify-center">
-                  {member.initial}
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-foreground">{member.name}</h3>
-                  <p className="text-sm text-accent">{member.role}</p>
-                  <p className="mt-2 text-sm text-muted leading-relaxed">{member.bio}</p>
-                </div>
-              </div>
-            </article>
+              <h3 className="text-lg font-bold text-foreground">{p.title}</h3>
+              <p className="mt-3 text-sm text-muted leading-relaxed">{p.body}</p>
+            </div>
           ))}
         </div>
 
-        <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
           {stats.map((stat, idx) => (
             <div
               key={stat.label}
-              className={`rounded-xl border border-border bg-surface/50 p-5 text-center transition-all duration-700 ${
+              className={`rounded-xl border border-border bg-surface/50 p-6 text-center transition-all duration-700 ${
                 visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
               }`}
-              style={{ transitionDelay: `${200 + idx * 100}ms` }}
+              style={{ transitionDelay: `${320 + idx * 80}ms` }}
             >
-              <div className="text-2xl font-bold text-accent">{stat.value}</div>
+              <div className="text-3xl font-bold text-accent">{stat.value}</div>
               <div className="text-sm text-muted mt-1">{stat.label}</div>
             </div>
           ))}

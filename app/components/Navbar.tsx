@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useEffect } from "react";
 
 export default function Navbar() {
@@ -21,22 +22,25 @@ export default function Navbar() {
       }`}
     >
       <div className="mx-auto max-w-7xl flex items-center justify-between px-6 py-4">
-        <a href="#" className="text-2xl font-bold tracking-tight text-foreground">
+        <Link href="/" className="text-2xl font-bold tracking-tight text-foreground">
           omna
-        </a>
+        </Link>
 
-        <div className="hidden md:flex items-center gap-8 text-sm text-muted">
-          <a href="#para-quien" className="hover:text-foreground transition-colors">
-            Para quien
+        <div className="hidden md:flex items-center gap-6 lg:gap-8 text-sm text-muted">
+          <a href="#status-quo" className="hover:text-foreground transition-colors">
+            El problema
           </a>
-          <a href="#como-trabajamos" className="hover:text-foreground transition-colors">
-            Como trabajamos
+          <a href="#tierra-prometida" className="hover:text-foreground transition-colors">
+            Del otro lado
           </a>
-          <a href="/casos" className="hover:text-foreground transition-colors">
-            Casos
+          <a href="#por-que-ahora" className="hover:text-foreground transition-colors">
+            Por qué ahora
+          </a>
+          <a href="#resultados" className="hover:text-foreground transition-colors">
+            Resultados
           </a>
           <a href="#nosotros" className="hover:text-foreground transition-colors">
-            Nosotros
+            Por qué OMNA
           </a>
         </div>
 
@@ -44,7 +48,7 @@ export default function Navbar() {
           href="#contacto"
           className="hidden sm:inline-flex items-center rounded-full bg-accent px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent-hover"
         >
-          Agendar llamada de descubrimiento
+          Agendar 30 minutos
         </a>
 
         <button
@@ -73,17 +77,20 @@ export default function Navbar() {
       {mobileOpen && (
         <div className="sm:hidden bg-background/95 backdrop-blur-md border-t border-border px-6 py-4">
           <div className="mb-3 space-y-2 text-sm">
-            <a href="#para-quien" onClick={() => setMobileOpen(false)} className="block text-muted hover:text-foreground transition-colors">
-              Para quien
+            <a href="#status-quo" onClick={() => setMobileOpen(false)} className="block text-muted hover:text-foreground transition-colors">
+              El problema
             </a>
-            <a href="#como-trabajamos" onClick={() => setMobileOpen(false)} className="block text-muted hover:text-foreground transition-colors">
-              Como trabajamos
+            <a href="#tierra-prometida" onClick={() => setMobileOpen(false)} className="block text-muted hover:text-foreground transition-colors">
+              Del otro lado
             </a>
-            <a href="/casos" onClick={() => setMobileOpen(false)} className="block text-muted hover:text-foreground transition-colors">
-              Casos
+            <a href="#por-que-ahora" onClick={() => setMobileOpen(false)} className="block text-muted hover:text-foreground transition-colors">
+              Por qué ahora
+            </a>
+            <a href="#resultados" onClick={() => setMobileOpen(false)} className="block text-muted hover:text-foreground transition-colors">
+              Resultados
             </a>
             <a href="#nosotros" onClick={() => setMobileOpen(false)} className="block text-muted hover:text-foreground transition-colors">
-              Nosotros
+              Por qué OMNA
             </a>
           </div>
           <a
@@ -91,7 +98,7 @@ export default function Navbar() {
             onClick={() => setMobileOpen(false)}
             className="block w-full text-center rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent-hover"
           >
-            Agendar llamada de descubrimiento
+            Agendar 30 minutos
           </a>
         </div>
       )}

@@ -15,11 +15,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "OMNA — Omnipresent Technology, Applied",
   description:
-    "Implementamos inteligencia artificial en empresas de manufactura y distribucion. No vendemos tecnologia, resolvemos problemas operativos.",
+    "El 70% de los pedidos en distribuidoras y fabricantes B2B llegan por WhatsApp, correo o llamada. Y el 100% se capturan a mano. OMNA — Omnipresent Technology, Applied.",
   openGraph: {
     title: "OMNA — Omnipresent Technology, Applied",
     description:
-      "Implementamos inteligencia artificial en empresas de manufactura y distribucion con impacto medible.",
+      "No llegamos con una solución. Llegamos a entender tu negocio. Casos reales en distribución y manufactura.",
     type: "website",
     locale: "es_MX",
   },

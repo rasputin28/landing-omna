@@ -1,14 +1,19 @@
 @import "tailwindcss";
 
+/* Palette: bg #CECDE9 · CTA #FE641C · accessory #E5E9E6, #1F3A2D */
 :root {
-  --background: #0f1f1f;
-  --foreground: #d8e8e8;
-  --accent: #e05a00;
-  --accent-hover: #ff6b1a;
-  --surface: #1c3a3a;
-  --surface-light: #224646;
-  --border: #2a4a4a;
-  --muted: #9aafaf;
+  --background: #cecde9;
+  /* Degradado de página (lila + verde muy suave) */
+  --background-gradient-from: #e5eae5;
+  --background-gradient-via: #cecde9;
+  --background-gradient-to: #e5eae5;
+  --foreground: #1f3a2d;
+  --accent: #fe641c;
+  --accent-hover: #ea5814;
+  --surface: #e5e9e6;
+  --surface-light: #eef1ef;
+  --border: #b8c4be;
+  --muted: #4a6359;
 }
 
 @theme inline {
@@ -24,13 +29,22 @@
   --font-mono: var(--font-geist-mono);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-}
-
 html {
   scroll-behavior: smooth;
+  min-height: 100%;
+}
+
+body {
+  min-height: 100%;
+  color: var(--foreground);
+  background-color: var(--background);
+  background-image: linear-gradient(
+    155deg,
+    var(--background-gradient-from) 0%,
+    var(--background-gradient-via) 42%,
+    var(--background-gradient-to) 100%
+  );
+  background-attachment: fixed;
 }
 
 @keyframes fade-in-up {
