@@ -14,35 +14,21 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://omna.club"),
-  icons: {
-    icon: "/icon",
-    shortcut: "/icon",
-    apple: "/icon",
-  },
-  title: "OMNA — Omnipresent Technology, Applied",
+  title: "OMNA — Tu empresa AI-first. Sin riesgo, sin reemplazar a tu equipo.",
   description:
-    "El 70% de los pedidos en distribuidoras y fabricantes B2B llegan por WhatsApp, correo o llamada. Y el 100% se capturan a mano. OMNA — Omnipresent Technology, Applied.",
+    "Somos la agencia que te lleva del 'no sabemos por dónde empezar con AI' a una operación AI-first con visibilidad, escala y documentación viva. Empieza con un diagnóstico.",
   openGraph: {
-    title: "OMNA — Omnipresent Technology, Applied",
+    title: "OMNA — Agencia AI-First para empresas en transición.",
     description:
-      "No llegamos con una solución. Llegamos a entender tu negocio. Casos reales en distribución y manufactura.",
+      "Diagnóstico, implementación y documentación viva. Para CEOs que necesitan escalar sin crecer su equipo, y para AI Champions que quieren liderar la transformación.",
     type: "website",
     locale: "es_MX",
-    images: [
-      {
-        url: "/opengraph-image",
-        width: 1200,
-        height: 630,
-        alt: "OMNA - Omnipresent Technology, Applied",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "OMNA — Omnipresent Technology, Applied",
+    title: "OMNA — Agencia AI-First.",
     description:
-      "No llegamos con una solución. Llegamos a entender tu negocio. Casos reales en distribución y manufactura.",
-    images: ["/opengraph-image"],
+      "Para CEOs que quieren escalar sin crecer su equipo, y para AI Champions que quieren liderar la transición.",
   },
 };
 

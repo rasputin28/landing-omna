@@ -26,8 +26,8 @@ export default function ContactForm() {
             omna.club
           </a>
           <br />
-          <a href="mailto:manuel@omna.ai" className="hover:text-foreground">
-            manuel@omna.ai
+          <a href="mailto:manuel@omna.club" className="hover:text-foreground">
+            manuel@omna.club
           </a>
           {" · "}
           <a
