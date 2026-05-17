@@ -48,6 +48,8 @@ export default function OpenGraphImage() {
         <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
           <div
             style={{
+              display: "flex",
+              flexWrap: "wrap",
               fontSize: 76,
               fontWeight: 800,
               lineHeight: 1.05,
@@ -55,7 +57,7 @@ export default function OpenGraphImage() {
               maxWidth: 1040,
             }}
           >
-            Convierte tu empresa en una operación{" "}
+            <span>Convierte tu empresa en una operación&nbsp;</span>
             <span style={{ color: "#fe641c" }}>AI-first.</span>
           </div>
           <div
