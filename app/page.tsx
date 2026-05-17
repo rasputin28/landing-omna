@@ -517,7 +517,7 @@ function Footer() {
   return (
     <footer className="border-t border-border/40 py-10 px-6">
       <p className="text-center text-sm text-muted">
-        OMNA · Trifecta Studio · 2026
+        OMNA · 2026
       </p>
     </footer>
   );
