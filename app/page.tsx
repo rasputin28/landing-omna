@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
+import BrainGraph from "./BrainGraph";
 
 const DIAGNOSTIC_HREF = "#contacto";
 const CONTACT_EMAIL = "manuel@omna.club";
@@ -476,9 +477,19 @@ function Platform() {
           documentación viva de tu operación —cada decisión, cada flujo, cada integración— vive ahí.
           Tu equipo la opera con nosotros y se la queda cuando el proyecto termina.
         </p>
-        <p className="mt-6 text-base text-foreground font-medium leading-relaxed text-center">
-          No la vendemos por separado. Es la herramienta que nos hace ser quienes somos.
-        </p>
+
+        <div className="mt-14">
+          <BrainGraph />
+        </div>
+
+        <div className="mt-12 flex justify-center">
+          <a
+            href={DIAGNOSTIC_HREF}
+            className="inline-flex items-center rounded-full bg-accent px-8 py-4 text-base sm:text-lg font-semibold text-white transition-all hover:bg-accent-hover hover:scale-[1.02]"
+          >
+            Construyamos el cerebro de tu operación →
+          </a>
+        </div>
       </div>
     </section>
   );
