@@ -558,7 +558,7 @@ function FinalCta() {
 function Footer() {
   return (
     <footer className="border-t border-border/40 py-10 px-6">
-      <p className="text-center text-sm text-muted">OMNA · 2026</p>
+      <p className="text-center text-sm text-muted">OMNA® · Marca registrada · 2026</p>
     </footer>
   );
 }
