@@ -10,7 +10,7 @@ export const size = {
 export const contentType = "image/png";
 
 export default function OpenGraphImage() {
-  const monogram = readFileSync(join(process.cwd(), "app", "icon.png"));
+  const monogram = readFileSync(join(process.cwd(), "public", "omna-isotipo.png"));
   const monogramSrc = `data:image/png;base64,${monogram.toString("base64")}`;
 
   return new ImageResponse(
@@ -24,21 +24,21 @@ export default function OpenGraphImage() {
           justifyContent: "space-between",
           padding: "72px 80px",
           background:
-            "radial-gradient(120% 90% at 100% 0%, #16302a 0%, #0a1a13 55%, #050d0a 100%)",
-          color: "#e5eae5",
+            "radial-gradient(120% 110% at 0% 0%, #2a0f44 0%, #160a28 50%, #0a0514 100%)",
+          color: "#ece8f2",
           fontFamily: "Arial, sans-serif",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "22px" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={monogramSrc} width={84} height={84} alt="" />
+          <img src={monogramSrc} width={96} height={96} alt="" />
           <div
             style={{
-              fontSize: 30,
-              letterSpacing: 6,
+              fontSize: 44,
+              letterSpacing: 8,
               textTransform: "uppercase",
-              color: "#fe641c",
-              fontWeight: 700,
+              color: "#ffffff",
+              fontWeight: 800,
             }}
           >
             OMNA
@@ -58,14 +58,14 @@ export default function OpenGraphImage() {
             }}
           >
             <span>Convierte tu empresa en una operación&nbsp;</span>
-            <span style={{ color: "#fe641c" }}>AI-first.</span>
+            <span style={{ color: "#c05cff" }}>AI-first.</span>
           </div>
           <div
             style={{
               fontSize: 30,
               lineHeight: 1.25,
               maxWidth: 980,
-              color: "#a9bcb2",
+              color: "#b4a6c8",
             }}
           >
             Sin reemplazar a tu equipo. Sin perder el control. Con documentación
@@ -79,12 +79,12 @@ export default function OpenGraphImage() {
             justifyContent: "space-between",
             alignItems: "flex-end",
             fontSize: 24,
-            color: "#a9bcb2",
+            color: "#b4a6c8",
             fontWeight: 600,
           }}
         >
           <div>omna.club</div>
-          <div style={{ color: "#fe641c" }}>Agencia AI-First</div>
+          <div style={{ color: "#d24b6e" }}>Agencia AI-First</div>
         </div>
       </div>
     ),
