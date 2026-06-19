@@ -7,27 +7,27 @@
  * Tipografía: Hanken Grotesk (stand-in oficial de SFT).
  * ============================================================ */
 :root {
-  /* Superficies — esquema claro, lavanda muy suave */
-  --background: #faf7fd;
-  --background-gradient-from: #f8f1fd;
-  --background-gradient-via: #efe1f9;
-  --background-gradient-to: #faf7fd;
-  --foreground: #160221;      /* morado casi negro (void) */
+  /* Superficies — esquema oscuro, morado profundo (estilo banner OG) */
+  --background: #0e0618;
+  --background-gradient-from: #1a0b2e;
+  --background-gradient-via: #120821;
+  --background-gradient-to: #0a0514;
+  --foreground: #ece8f2;      /* casi blanco lavanda */
 
-  /* Marca — morado dominante */
-  --brand: #51127f;
-  --brand-hover: #5e1894;
-  --brand-soft: #efe1f9;
+  /* Marca — morado vibrante (legible como texto sobre fondo oscuro) */
+  --brand: #a855f7;
+  --brand-hover: #b975ff;
+  --brand-soft: #1d1030;      /* superficie morada elevada */
 
   /* Acento — naranja, uso reservado (CTA / números) */
   --accent: #f67949;
-  --accent-hover: #e8693c;
+  --accent-hover: #fe8a5e;
 
   /* Apoyo */
-  --surface: #efe1f9;         /* lavanda claro para secciones */
-  --surface-light: #f8f1fd;
-  --border: #ddd0ea;
-  --muted: #6f6480;
+  --surface: #160a28;         /* morado oscuro para secciones */
+  --surface-light: #1d1030;
+  --border: #2e1f44;
+  --muted: #b4a6c8;           /* lavanda apagado */
 }
 
 @theme inline {
