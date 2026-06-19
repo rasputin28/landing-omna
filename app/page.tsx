@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
 
@@ -252,6 +253,28 @@ function Method() {
         <p className="mt-10 text-center text-lg sm:text-xl font-medium text-foreground max-w-3xl mx-auto leading-snug">
           La diferencia no es trabajar más duro. Es empezar por entender tu operación antes de
           tocar una sola línea de código.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+function FactoryBand() {
+  return (
+    <section className="relative h-[55vh] min-h-[360px] w-full overflow-hidden">
+      <Image
+        src="/planta-equipo.jpg"
+        alt="Operarios trabajando en una línea de producción"
+        fill
+        sizes="100vw"
+        className="object-cover"
+      />
+      <div className="absolute inset-0 bg-gradient-to-r from-brand/90 via-brand/60 to-brand/20" />
+      <div className="relative z-10 h-full max-w-6xl mx-auto px-6 flex items-center">
+        <p className="max-w-xl text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight">
+          Donde otros dejan diapositivas,
+          <br />
+          nosotros dejamos IA operando en tu planta.
         </p>
       </div>
     </section>
@@ -537,6 +560,7 @@ export default function Home() {
         <Hero />
         <Audiences />
         <Method />
+        <FactoryBand />
         <PromisedLand />
         <Process />
         <Why />
