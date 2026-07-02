@@ -1,30 +1,38 @@
 import type { Metadata } from "next";
-import { Hanken_Grotesk } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const hanken = Hanken_Grotesk({
-  variable: "--font-hanken",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+const sft = localFont({
+  variable: "--font-sft",
+  display: "swap",
+  src: [
+    { path: "../public/fonts/SFTSchriftedSans-300.ttf", weight: "300", style: "normal" },
+    { path: "../public/fonts/SFTSchriftedSans-400.ttf", weight: "400", style: "normal" },
+    { path: "../public/fonts/SFTSchriftedSans-500.ttf", weight: "500", style: "normal" },
+    { path: "../public/fonts/SFTSchriftedSans-600.ttf", weight: "600", style: "normal" },
+    { path: "../public/fonts/SFTSchriftedSans-700.ttf", weight: "700", style: "normal" },
+    { path: "../public/fonts/SFTSchriftedSans-800.ttf", weight: "800", style: "normal" },
+    { path: "../public/fonts/SFTSchriftedSans-900.ttf", weight: "900", style: "normal" },
+  ],
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://omna.club"),
-  title: "OMNA — IA que llega a producción en tu planta. No otro piloto.",
+  title: "OMNA — Tu fábrica o distribuidora, en piloto automático.",
   description:
-    "Hacemos que la inteligencia artificial funcione de verdad dentro de la operación de fabricantes y distribuidores maduros. Integramos con tu ERP, MES, sensores y sistemas legacy. Empieza con un diagnóstico.",
+    "Plataforma de IA de punta a punta para fabricantes y distribuidores. Automatiza pedidos, inventarios, conciliación, ingenierías y planeación de demanda. Todo conectado a un Cerebro que aprende tu operación.",
   openGraph: {
-    title: "OMNA — IA aplicada para industria, manufactura y distribución.",
+    title: "OMNA — Tu fábrica o distribuidora, en piloto automático.",
     description:
-      "Diagnóstico en sitio, integración con tus sistemas reales y resultados medibles. Para directores que necesitan ejecutar IA, y para los equipos de TI que la van a sostener.",
+      "IA de punta a punta para manufactura y distribución. Agentes verticales que ejecutan pedidos, conciliación e inventarios sobre un Cerebro que conecta todos tus datos.",
     type: "website",
     locale: "es_MX",
   },
   twitter: {
     card: "summary_large_image",
-    title: "OMNA — IA aplicada para industria, manufactura y distribución.",
+    title: "OMNA — Tu fábrica o distribuidora, en piloto automático.",
     description:
-      "Diagnóstico en sitio, integración con tus sistemas reales y resultados medibles. IA en producción, no otro piloto.",
+      "IA de punta a punta para manufactura y distribución. Agentes verticales sobre un Cerebro que aprende tu operación.",
   },
 };
 
@@ -34,11 +42,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="es"
-      className={`${hanken.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col font-sans">{children}</body>
+    <html lang="es" className={`${sft.variable} h-full antialiased`}>
+      <body className="min-h-full">{children}</body>
     </html>
   );
 }

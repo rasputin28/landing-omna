@@ -1,96 +1,243 @@
 @import "tailwindcss";
 
 /* ============================================================
- * OMNA Design System — landing tokens
- * Morado (#51127F) es el color dominante de marca.
- * Naranja (#F67949) se reserva para CTAs y números clave.
- * Tipografía: Hanken Grotesk (stand-in oficial de SFT).
+ * OMNA Design System — landing
+ * Source of truth: Gama Cromática OMNA RGB (digital).
+ * Brand core: Violet #51127F · Amethyst #954ACC · Lilac #DFC3F4 · Orange #FE651D · Ink #160221
+ * Typeface: SFT Schrifted Sans (self-hosted via next/font/local → --font-sft)
  * ============================================================ */
+
 :root {
-  /* Superficies — esquema oscuro, morado profundo (estilo banner OG) */
-  --background: #0e0618;
-  --background-gradient-from: #1a0b2e;
-  --background-gradient-via: #120821;
-  --background-gradient-to: #0a0514;
-  --foreground: #ece8f2;      /* casi blanco lavanda */
+  /* ---- Brand core ---- */
+  --omna-ink: #160221;
+  --omna-violet: #51127F;
+  --omna-amethyst: #954ACC;
+  --omna-lilac: #DFC3F4;
+  --omna-orange: #FE651D;
 
-  /* Marca — morado vibrante (legible como texto sobre fondo oscuro) */
-  --brand: #a855f7;
-  --brand-hover: #b975ff;
-  --brand-soft: #1d1030;      /* superficie morada elevada */
+  /* ---- Violet ramp ---- */
+  --violet-50:  #F7F0FC;
+  --violet-100: #EEDDFA;
+  --violet-200: #E4CDF6;
+  --violet-300: #DFC3F4;
+  --violet-400: #BC8FE0;
+  --violet-500: #954ACC;
+  --violet-600: #732FA6;
+  --violet-700: #51127F;
+  --violet-800: #380C59;
+  --violet-900: #220638;
+  --violet-950: #160221;
 
-  /* Acento — naranja, uso reservado (CTA / números) */
-  --accent: #f67949;
-  --accent-hover: #fe8a5e;
+  /* ---- Orange scale ---- */
+  --orange-700: #C9450C;
+  --orange-600: #E5510F;
+  --orange-500: #FE651D;
+  --orange-400: #FF8146;
+  --orange-300: #FFA875;
 
-  /* Apoyo */
-  --surface: #160a28;         /* morado oscuro para secciones */
-  --surface-light: #1d1030;
-  --border: #2e1f44;
-  --muted: #b4a6c8;           /* lavanda apagado */
+  --magenta-500: #D6418B;
+
+  /* ---- Neutrals — plum-tinted cool grays ---- */
+  --neutral-0:   #FFFFFF;
+  --neutral-50:  #F6F4F8;
+  --neutral-100: #ECE7F1;
+  --neutral-200: #D7D0E0;
+  --neutral-300: #B7AEC6;
+  --neutral-400: #978BAB;
+  --neutral-500: #6E6383;
+  --neutral-600: #524863;
+  --neutral-700: #3A3148;
+  --neutral-800: #271E33;
+  --neutral-900: #160221;
+
+  /* ---- Signature gradients ---- */
+  --gradient-brand: linear-gradient(108deg, #51127F 0%, #954ACC 32%, #D6418B 62%, #FE651D 100%);
+  --gradient-text:  linear-gradient(95deg, #FE651D 0%, #E5484D 30%, #D6418B 58%, #954ACC 100%);
+  --gradient-warm:  linear-gradient(120deg, #FF8146 0%, #FE651D 42%, #D6418B 100%);
+  --gradient-soft:  linear-gradient(135deg, #FFD0B3 0%, #DFC3F4 60%, #ECE7F1 100%);
+  --glow-violet: radial-gradient(60% 80% at 50% 35%, rgba(149, 74, 204, 0.45), rgba(149, 74, 204, 0) 70%);
+
+  /* ---- Semantic aliases (OMNA dark = default) ---- */
+  --surface-base: var(--omna-ink);
+  --surface-raised: #1E0930;
+  --surface-inset: #11011C;
+
+  --border-subtle: rgba(223, 195, 244, 0.10);
+  --border-default: rgba(223, 195, 244, 0.16);
+  --border-strong: rgba(223, 195, 244, 0.30);
+
+  --text-primary: #FFFFFF;
+  --text-secondary: rgba(247, 240, 252, 0.70);
+  --text-muted: rgba(223, 195, 244, 0.52);
+  --text-onbrand: #FFFFFF;
+  --text-onlilac: var(--omna-ink);
+
+  --accent: var(--omna-orange);
+  --accent-hover: var(--orange-400);
+  --accent-press: var(--orange-600);
+  --accent-soft: rgba(254, 101, 29, 0.14);
+  --brand-soft: rgba(149, 74, 204, 0.16);
+
+  --status-success: #38B27E;
+  --status-warning: #F2A33C;
+  --status-danger: #E5484D;
+  --status-info: var(--omna-amethyst);
+
+  /* ---- Typography ---- */
+  --font-sans: var(--font-sft), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-sans);
+  --font-mono: ui-monospace, "SF Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+
+  --fw-light: 300; --fw-regular: 400; --fw-medium: 500; --fw-demibold: 600;
+  --fw-bold: 700; --fw-extrabold: 800; --fw-black: 900;
+
+  --tracking-tight: -0.02em; --tracking-snug: -0.01em; --tracking-normal: 0em;
+  --tracking-wide: 0.04em; --tracking-wider: 0.14em;
+
+  /* ---- Radius ---- */
+  --radius-xs: 6px; --radius-sm: 10px; --radius-md: 14px; --radius-lg: 20px;
+  --radius-card: 20px; --radius-xl: 28px; --radius-2xl: 36px; --radius-pill: 999px;
+
+  /* ---- Shadows ---- */
+  --shadow-sm: 0 1px 2px rgba(13, 1, 22, 0.40);
+  --shadow-md: 0 8px 24px -8px rgba(13, 1, 22, 0.55);
+  --shadow-lg: 0 24px 60px -16px rgba(13, 1, 22, 0.65);
+  --shadow-glow-orange: 0 0 0 1px rgba(254, 101, 29, 0.45), 0 0 28px -4px rgba(254, 101, 29, 0.55);
+  --shadow-glow-violet: 0 0 48px -8px rgba(149, 74, 204, 0.50);
+
+  /* ---- Motion ---- */
+  --dur-fast: 140ms; --dur-base: 220ms; --dur-slow: 420ms;
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* ---- Layout ---- */
+  --gutter: clamp(20px, 5vw, 80px);
+  --container-max: 1200px;
+  --container-wide: 1320px;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-brand: var(--brand);
-  --color-brand-hover: var(--brand-hover);
-  --color-brand-soft: var(--brand-soft);
-  --color-accent: var(--accent);
-  --color-accent-hover: var(--accent-hover);
-  --color-surface: var(--surface);
-  --color-surface-light: var(--surface-light);
-  --color-border: var(--border);
-  --color-muted: var(--muted);
-  --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+  --color-background: var(--surface-base);
+  --color-foreground: var(--text-primary);
+  --font-sans: var(--font-sft), ui-sans-serif, system-ui, sans-serif;
 }
 
-html {
-  scroll-behavior: smooth;
-  min-height: 100%;
-}
+/* ---- Base ---- */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; min-height: 100%; }
 
 body {
-  min-height: 100%;
-  color: var(--foreground);
-  background-color: var(--background);
-  background-image: linear-gradient(
-    155deg,
-    var(--background-gradient-from) 0%,
-    var(--background-gradient-via) 45%,
-    var(--background-gradient-to) 100%
-  );
-  background-attachment: fixed;
+  font-family: var(--font-sans);
+  font-weight: var(--fw-regular);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background: var(--surface-base);
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-@keyframes fade-in-up {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--fw-bold);
+  line-height: 1.05;
+  letter-spacing: var(--tracking-tight);
+}
+p { text-wrap: pretty; }
+img, svg, video { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+::selection { background: rgba(254,101,29,.32); color: #fff; }
+::-webkit-scrollbar { width: 11px; }
+::-webkit-scrollbar-thumb { background: rgba(149,74,204,.40); border-radius: 10px; }
+::-webkit-scrollbar-track { background: #11011C; }
+
+/* ---- Signature brand utilities ---- */
+.omna-gradient-text {
+  background: var(--gradient-text);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.omna-surface-brand { background: var(--gradient-brand); color: var(--text-onbrand); }
+.omna-eyebrow {
+  font-family: var(--font-sans); font-weight: var(--fw-bold); font-size: .75rem;
+  letter-spacing: var(--tracking-wider); text-transform: uppercase; color: var(--omna-orange);
+}
+.omna-flow {
+  background: var(--gradient-text); background-size: 200% auto;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: omnaGradFlow 7s linear infinite;
 }
 
-@keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+/* The grain is the brand — fine fractal noise overlay for gradient surfaces. */
+.omna-grain { position: relative; }
+.omna-grain::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  opacity: 0.42; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-@keyframes scroll-left {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+/* ---- Keyframes ---- */
+@keyframes omnaBreathe { 0%{transform:scale(1.06) translate3d(0,0,0)} 50%{transform:scale(1.15) translate3d(-2.2%,-1.6%,0)} 100%{transform:scale(1.06) translate3d(0,0,0)} }
+@keyframes omnaWordIn { 0%{opacity:0; filter:blur(18px); transform:translateY(30px)} 100%{opacity:1; filter:blur(0); transform:none} }
+@keyframes omnaFadeUp { 0%{opacity:0; transform:translateY(22px)} 100%{opacity:1; transform:none} }
+@keyframes omnaFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-13px)} }
+@keyframes omnaFloatSoft { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
+@keyframes omnaPulse { 0%,100%{opacity:.40} 50%{opacity:.92} }
+@keyframes omnaPreSweep { 0%{background-position:0% 50%} 100%{background-position:200% 50%} }
+@keyframes omnaScaleIn { 0%{opacity:0; transform:scale(.94)} 100%{opacity:1; transform:scale(1)} }
+@keyframes omnaMarquee { to { transform:translateX(-50%); } }
+@keyframes omnaTwinkle { 0%,100%{ opacity:.18; transform:scale(.5);} 50%{ opacity:1; transform:scale(1);} }
+@keyframes omnaBadgeGlow { 0%,100%{ box-shadow:0 0 0 1px rgba(254,101,29,0), 0 10px 34px -14px rgba(149,74,204,.5);} 50%{ box-shadow:0 0 0 1px rgba(254,101,29,.20), 0 12px 40px -10px rgba(254,101,29,.42);} }
+@keyframes omnaGradFlow { to { background-position:200% center; } }
+@keyframes omnaCoreBloom { 0%,100%{ opacity:.58; transform:translate(-50%,-50%) scale(.94);} 50%{ opacity:1; transform:translate(-50%,-50%) scale(1.07);} }
+@keyframes omnaCoreLive { 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.055);} }
+@keyframes omnaCoreOrbit { to { transform:translate(-50%,-50%) rotate(360deg);} }
+
+/* ---- Reveal on scroll ---- */
+[data-reveal] {
+  opacity: 0; transform: translateY(34px);
+  transition: opacity 1s var(--ease-out), transform 1s var(--ease-out);
+  will-change: opacity, transform;
 }
+[data-reveal][data-in] { opacity: 1; transform: none; }
+[data-reveal][data-d="1"] { transition-delay: .08s }
+[data-reveal][data-d="2"] { transition-delay: .16s }
+[data-reveal][data-d="3"] { transition-delay: .24s }
+[data-reveal][data-d="4"] { transition-delay: .32s }
+[data-reveal][data-d="5"] { transition-delay: .40s }
 
-@keyframes count-up {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+/* ---- Nav underline ---- */
+[data-navlink] { position: relative; }
+[data-navlink]::after {
+  content: ""; position: absolute; left: 0; right: 100%; bottom: -7px;
+  height: 1.5px; background: var(--omna-orange); transition: right .35s var(--ease-out);
 }
+[data-navlink]:hover::after { right: 0; }
+[data-navlink]:hover { color: #fff; }
 
-.animate-fade-in-up { animation: fade-in-up 0.7s ease-out both; }
-.animate-fade-in { animation: fade-in 0.5s ease-out both; }
-.animate-scroll-left { animation: scroll-left 30s linear infinite; }
-.animate-count-up { animation: count-up 0.5s ease-out both; }
+/* ---- Card hover ---- */
+[data-q-card] { transition: transform .4s var(--ease-out), border-color .4s var(--ease-out), background .4s var(--ease-out); }
+[data-q-card]:hover { transform: translateY(-4px); border-color: var(--border-strong) !important; }
 
-.animation-delay-100 { animation-delay: 100ms; }
-.animation-delay-200 { animation-delay: 200ms; }
-.animation-delay-300 { animation-delay: 300ms; }
-.animation-delay-400 { animation-delay: 400ms; }
-.animation-delay-500 { animation-delay: 500ms; }
-.animation-delay-600 { animation-delay: 600ms; }
+@media (max-width:900px) {
+  [data-hero-grid] { grid-template-columns: 1fr !important; }
+  [data-2col] { grid-template-columns: 1fr !important; }
+  [data-sticky] { position: static !important; height: auto !important; }
+}
+@media (max-width:820px) {
+  [data-navwrap] { display: none !important; }
+  [data-menu-btn] { display: inline-flex !important; }
+  [data-nav-cta] { display: none !important; }
+}
+@media (max-width:560px) {
+  [data-chip] { font-size: .66rem !important; padding: 5px 9px !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation: none !important; }
+  [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
