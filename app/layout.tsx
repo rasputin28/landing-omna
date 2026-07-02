@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import localFont from "next/font/local";
 import "./globals.css";
+
+const GA_ID = "G-5JVD67G0ER";
 
 const sft = localFont({
   variable: "--font-sft",
@@ -44,6 +47,13 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${sft.variable} h-full antialiased`}>
       <body className="min-h-full">{children}</body>
+      <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
+      <Script id="gtag-init" strategy="afterInteractive">
+        {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${GA_ID}');`}
+      </Script>
     </html>
   );
 }
