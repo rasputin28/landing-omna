@@ -621,7 +621,7 @@ export default function LandingClient() {
             <div>
               <div style={{ fontSize: ".78rem", letterSpacing: ".2em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: 16 }}>Contacto</div>
               <div style={{ display: "grid", gap: 12, color: "var(--text-secondary)" }}>
-                <a href="mailto:hola@omna.ai">hola@omna.ai</a>
+                <a href="mailto:manuel@omna.club">manuel@omna.club</a>
                 <a href="https://instagram.com/manuelnocode" target="_blank" rel="noreferrer">Instagram · @manuelnocode</a>
               </div>
             </div>
