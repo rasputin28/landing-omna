@@ -233,8 +233,15 @@ button, input, select, textarea { font: inherit; color: inherit; }
   [data-menu-btn] { display: inline-flex !important; }
   [data-nav-cta] { display: none !important; }
 }
+@media (max-width:960px) {
+  [data-agenda] { grid-template-columns: 1fr !important; }
+  [data-agenda-left] { min-height: auto !important; }
+  [data-int-grid] { grid-template-columns: 1fr 1fr !important; }
+}
 @media (max-width:560px) {
   [data-chip] { font-size: .66rem !important; padding: 5px 9px !important; }
+  [data-int-grid] { grid-template-columns: 1fr !important; }
+  [data-2col-form] { grid-template-columns: 1fr !important; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

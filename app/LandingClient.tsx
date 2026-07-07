@@ -5,12 +5,10 @@ import Image from "next/image";
 import {
   Factory, Keyboard, EyeOff, Scale, Boxes, Database, Bot, Lock, GitBranch,
   LineChart, ClipboardList, DraftingCompass, Target, Truck, Check, ArrowRight,
-  MoveHorizontal, Menu, X,
+  MoveHorizontal, Menu, X, ChevronLeft, Rocket, ShieldCheck, HeartHandshake,
+  CalendarCheck, ArrowUpRight,
 } from "lucide-react";
 import OmnaBrain from "./OmnaBrain";
-
-const FILLOUT_ID = "u5xF6jsfB5us";
-const FILLOUT_DOMAIN = "forms.trifecta.studio";
 
 /* ---------- shared styles ---------- */
 const wrap: CSSProperties = { maxWidth: "var(--container-max)", margin: "0 auto", padding: "0 var(--gutter)" };
@@ -48,22 +46,24 @@ function Button({ variant = "primary", size = "lg", arrow, full, onClick, childr
   );
 }
 
-function Stat({ value, label }: { value: string; label: string }) {
-  return (
-    <div>
-      <div className="omna-flow" style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "clamp(2rem,3.6vw,2.9rem)", lineHeight: 1, letterSpacing: "-.02em" }}>{value}</div>
-      <div style={{ marginTop: 10, color: "var(--text-secondary)", fontSize: ".98rem" }}>{label}</div>
-    </div>
-  );
-}
-
 /* ---------- data ---------- */
 const NAV = [
   { id: "inicio", label: "Inicio" },
   { id: "problema", label: "El problema" },
   { id: "solucion", label: "Solución" },
   { id: "casos", label: "Casos de uso" },
-  { id: "metodologia", label: "Metodología" },
+  { id: "integraciones", label: "Integraciones" },
+];
+
+const INTEGRACIONES = [
+  { cat: "Hojas de cálculo", name: "Excel" },
+  { cat: "Productividad", name: "Google Workspace" },
+  { cat: "Almacenamiento", name: "Microsoft OneDrive" },
+  { cat: "ERP", name: "SAP" },
+  { cat: "ERP", name: "Oracle NetSuite" },
+  { cat: "ERP", name: "Odoo" },
+  { cat: "ERP", name: "Microsoft Dynamics" },
+  { cat: "ERP", name: "Legacy a la medida" },
 ];
 
 const LOGOS = ["Telefónica", "Illux", "Persianas Classic", "Jägermeister"];
@@ -106,15 +106,27 @@ const CASOS = [
   { icon: <Truck size={21} />, title: "Supply chain", dolor: "Embarques en portales distintos; incidencias cuando el cliente llama; guías con doble costo.", construye: "Torre de control de embarques con rastreo unificado y alertas de incidencias antes del reclamo.", chip: "Torre de control unificada" },
 ];
 
-const METODO = [
-  { n: "01", title: "Diagnóstico", body: "Antes de hablar de IA entendemos cómo funciona tu operación: procesos, ERP, información, objetivos y personas." },
-  { n: "02", title: "Conectamos", body: "Integramos ERP, CRM, correos, fleteras, documentación, APIs y dashboards. Todo comienza a hablar entre sí." },
-  { n: "03", title: "Construimos agentes", body: "Desplegamos los agentes verticales que ejecutan pedidos, conciliación, inventarios e ingenierías. Todo conectado al Cerebro." },
-  { n: "04", title: "Entrenamos el Cerebro", body: "Cada documento, reunión, factura, proceso y conversación hace más inteligente al Cerebro." },
-  { n: "05", title: "Nunca deja de aprender", body: "Cada proyecto nuevo aumenta el conocimiento acumulado. No reinicias desde cero: construyes un activo que se vuelve más valioso cada mes.", hi: true },
-];
-
 const eyebrow = (t: string) => <span className="omna-eyebrow">{t}</span>;
+
+type FormState = {
+  pais: string; nombre: string; apellido: string; email: string; telefono: string;
+  empresa: string; tipoEmpresa: string; facturacion: string; cuelloBotella: string; origen: string;
+};
+const EMPTY_FORM: FormState = {
+  pais: "", nombre: "", apellido: "", email: "", telefono: "",
+  empresa: "", tipoEmpresa: "", facturacion: "", cuelloBotella: "", origen: "",
+};
+
+/* Opciones de los selects. tipoEmpresa viene del diseño; las demás son
+   propuestas — confirmar contra las columnas singleSelect del Airtable. */
+const TIPO_EMPRESA = ["Manufactura (Fábrica / Productor)", "Distribución / Logística", "Mayorista (Comercio B2B)", "Minorista (Retail / Venta al público)", "Mixta (Manufactura y Distribución)"];
+const FACTURACION = ["Menos de $50M MXN", "$50M – $100M MXN", "$100M – $500M MXN", "$500M – $1,000M MXN", "Más de $1,000M MXN"];
+const CUELLO_BOTELLA = ["Captura de pedidos", "Conciliación de fleteras", "Planeación de demanda", "Optimización de inventarios", "Ingenierías y cotización", "Expansión comercial", "Supply chain / embarques", "Otro"];
+const ORIGEN = ["Recomendación", "LinkedIn", "Instagram", "Búsqueda en Google", "Evento / conferencia", "Otro"];
+
+const inputStyle: CSSProperties = { height: 56, padding: "0 16px", borderRadius: 14, border: "1px solid var(--border-default)", background: "var(--surface-inset)", color: "#fff", fontSize: "1rem", outline: "none", fontFamily: "inherit" };
+const selectStyle: CSSProperties = { ...inputStyle, appearance: "none" };
+const labelSpan: CSSProperties = { fontWeight: 600, fontSize: ".98rem" };
 
 export default function LandingClient() {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -127,6 +139,14 @@ export default function LandingClient() {
   const heroExplode = useRef<number>(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [step, setStep] = useState(1);
+  const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [form, setForm] = useState<FormState>(EMPTY_FORM);
+  const utmSourceRef = useRef<string>("");
+  const setField = useCallback((k: keyof FormState) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const v = e.target.value; setForm((f) => ({ ...f, [k]: v }));
+  }, []);
 
   const scrollToId = useCallback((id: string) => {
     setMenuOpen(false);
@@ -134,7 +154,23 @@ export default function LandingClient() {
     const el = document.getElementById(id);
     if (el) window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - 78), behavior: "smooth" });
   }, []);
-  const openAgenda = useCallback(() => { setModalOpen(true); setMenuOpen(false); }, []);
+  const openAgenda = useCallback(() => { setModalOpen(true); setMenuOpen(false); setSent(false); setStep(1); }, []);
+  const closeAgenda = useCallback(() => setModalOpen(false), []);
+  const back = useCallback(() => setStep((s) => Math.max(1, s - 1)), []);
+  const advance = useCallback(async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (step < 3) { setStep((s) => s + 1); return; }
+    setSubmitting(true);
+    try {
+      const res = await fetch("/api/lead", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...form, utmSource: utmSourceRef.current }) });
+      if (!res.ok) throw new Error(await res.text());
+      setSent(true);
+    } catch {
+      alert("No pudimos enviar tu solicitud. Intenta de nuevo o escríbenos a manuel@omna.club.");
+    } finally {
+      setSubmitting(false);
+    }
+  }, [step, form]);
 
   /* reveals */
   useEffect(() => {
@@ -216,14 +252,16 @@ export default function LandingClient() {
     return () => { el.removeEventListener("pointerdown", down); el.removeEventListener("pointermove", move); el.removeEventListener("pointerup", up); el.removeEventListener("pointercancel", up); };
   }, []);
 
-  /* Fillout embed — (re)load script while modal is open */
+  /* capture utm_source from the landing URL (?utm_source=tiktok, etc.) */
+  useEffect(() => {
+    utmSourceRef.current = new URLSearchParams(window.location.search).get("utm_source") ?? "";
+  }, []);
+
+  /* lock page scroll while the agenda modal is open */
   useEffect(() => {
     if (!modalOpen) return;
-    const s = document.createElement("script");
-    s.src = "https://server.fillout.com/embed/v1/";
-    document.body.appendChild(s);
     document.body.style.overflow = "hidden";
-    return () => { s.remove(); document.body.style.overflow = ""; };
+    return () => { document.body.style.overflow = ""; };
   }, [modalOpen]);
 
   return (
@@ -251,7 +289,7 @@ export default function LandingClient() {
             ))}
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <span data-nav-cta><Button variant="primary" size="md" arrow onClick={openAgenda}>Agenda un diagnóstico</Button></span>
+            <span data-nav-cta><Button variant="primary" size="md" arrow onClick={openAgenda}>Ponte en contacto</Button></span>
             <button data-menu-btn onClick={() => setMenuOpen((v) => !v)} aria-label="Menú" style={{ width: 44, height: 44, borderRadius: "var(--radius-md)", border: "1px solid var(--border-default)", background: "rgba(255,255,255,.03)", color: "#fff", cursor: "pointer", alignItems: "center", justifyContent: "center" }}><Menu size={22} /></button>
           </div>
         </nav>
@@ -261,7 +299,7 @@ export default function LandingClient() {
               {NAV.map((n) => (
                 <button key={n.id} onClick={() => scrollToId(n.id)} style={{ textAlign: "left", background: "none", border: "none", borderBottom: "1px solid var(--border-subtle)", cursor: "pointer", fontSize: "1.2rem", fontWeight: 600, color: "#fff", padding: "16px 0" }}>{n.label}</button>
               ))}
-              <div style={{ marginTop: 14 }}><Button variant="primary" size="lg" arrow full onClick={openAgenda}>Agenda un diagnóstico</Button></div>
+              <div style={{ marginTop: 14 }}><Button variant="primary" size="lg" arrow full onClick={openAgenda}>Ponte en contacto</Button></div>
             </div>
           </div>
         )}
@@ -285,7 +323,7 @@ export default function LandingClient() {
                 Tu plataforma de inteligencia artificial construida para fabricantes y distribuidores. Automatiza pedidos, inventarios, conciliación, ingenierías y planeación de demanda de punta a punta.
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 16, marginTop: 36, animation: "omnaFadeUp 1s var(--ease-out) .9s both" }}>
-                <Button variant="primary" size="lg" arrow onClick={openAgenda}>Agenda un diagnóstico</Button>
+                <Button variant="primary" size="lg" arrow onClick={openAgenda}>Ponte en contacto</Button>
                 <Button variant="secondary" size="lg" onClick={() => scrollToId("solucion")}>Ver cómo funciona</Button>
               </div>
             </div>
@@ -533,35 +571,28 @@ export default function LandingClient() {
           </div>
         </section>
 
-        {/* ===== 8 · METODOLOGÍA ===== */}
-        <section id="metodologia" style={{ position: "relative", zIndex: 2, padding: "clamp(70px,10vh,140px) 0" }}>
+        {/* ===== 8 · INTEGRACIONES ===== */}
+        <section id="integraciones" style={{ position: "relative", zIndex: 2, padding: "clamp(70px,10vh,140px) 0" }}>
           <div style={wrap}>
             <div data-reveal style={{ maxWidth: 760 }}>
-              {eyebrow("Metodología")}
-              <h2 style={h2}>Así construimos un<br /><span className="omna-flow">Cerebro vivo</span>.</h2>
-              <p style={{ marginTop: 18, maxWidth: 560, fontSize: "1.08rem", lineHeight: 1.6, color: "var(--text-secondary)" }}>Cada proyecto alimenta el Cerebro automáticamente. El valor se acumula — no se reinicia con cada proyecto.</p>
+              {eyebrow("Herramientas y sistemas")}
+              <h2 style={h2}>Se integra con tu <span className="omna-flow">stack actual</span>.</h2>
+              <p style={{ marginTop: 18, maxWidth: 600, fontSize: "1.08rem", lineHeight: 1.6, color: "var(--text-secondary)" }}>Hojas de cálculo, almacenamiento en la nube y tu ERP — OMNA opera dentro de las herramientas que tu equipo ya usa.</p>
             </div>
-            <div data-2col style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)", gap: "clamp(30px,4vw,56px)", marginTop: 50, alignItems: "start" }}>
-              <div data-sticky style={{ position: "sticky", top: 104, height: "min(72vh,640px)" }}>
-                <div style={{ position: "relative", width: "100%", height: "100%", borderRadius: "var(--radius-2xl)", overflow: "hidden", border: "1px solid var(--border-default)", background: "radial-gradient(120% 100% at 50% 30%, #260a3d, #0d0117)" }}>
-                  <OmnaBrain mode="core" />
-                  <div style={{ position: "absolute", left: 0, bottom: 0, padding: 24, pointerEvents: "none" }}>
-                    <div style={{ fontSize: ".74rem", letterSpacing: ".22em", textTransform: "uppercase", color: "var(--omna-orange)" }}>El Cerebro</div>
-                    <div style={{ fontSize: "1.1rem", fontWeight: 600, color: "#fff", marginTop: 4 }}>Pensando · conectando · aprendiendo</div>
-                  </div>
+            <div data-reveal data-int-grid style={{ marginTop: 50, border: "1px solid var(--border-subtle)", borderRadius: "var(--radius-2xl)", overflow: "hidden", background: "var(--border-subtle)", display: "grid", gridTemplateColumns: "repeat(4,minmax(0,1fr))", gap: 1 }}>
+              {INTEGRACIONES.map((t) => (
+                <div key={t.name} style={{ background: "var(--surface-base)", padding: "26px 24px", minHeight: 118, display: "flex", flexDirection: "column", justifyContent: "center", gap: 12 }}>
+                  <span style={{ fontSize: ".72rem", letterSpacing: ".2em", textTransform: "uppercase", color: "var(--text-muted)" }}>{t.cat}</span>
+                  <span style={{ fontSize: "1.16rem", fontWeight: 600, color: "#fff" }}>{t.name}</span>
                 </div>
-              </div>
-              <div style={{ display: "grid", gap: 16 }}>
-                {METODO.map((m) => (
-                  <div key={m.n} data-reveal data-q-card style={{ ...card, padding: 28, ...(m.hi ? { border: "1px solid var(--omna-orange)", background: "linear-gradient(160deg, rgba(149,74,204,.16), var(--surface-raised))" } : {}) }}>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: 14 }}>
-                      <span style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "1.8rem", background: "var(--gradient-text)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>{m.n}</span>
-                      <h3 style={{ fontSize: "1.34rem", fontWeight: 700, color: "#fff" }}>{m.title}</h3>
-                    </div>
-                    <p style={{ marginTop: 12, color: "var(--text-secondary)", lineHeight: 1.6 }}>{m.body}</p>
-                  </div>
-                ))}
-              </div>
+              ))}
+              <button data-int-cell onClick={openAgenda} style={{ gridColumn: "1 / -1", textAlign: "left", cursor: "pointer", background: "linear-gradient(120deg, rgba(149,74,204,.14), var(--surface-base))", padding: "26px 24px", minHeight: 118, border: "none", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
+                <span style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                  <span style={{ fontSize: ".72rem", letterSpacing: ".2em", textTransform: "uppercase", color: "var(--omna-orange)" }}>¿Usas otro?</span>
+                  <span style={{ fontSize: "1.16rem", fontWeight: 600, color: "#fff" }}>Ponte en contacto — lo integramos.</span>
+                </span>
+                <ArrowUpRight size={24} style={{ color: "var(--omna-orange)", flex: "none" }} />
+              </button>
             </div>
           </div>
         </section>
@@ -574,11 +605,6 @@ export default function LandingClient() {
               <h2 style={{ ...h2, lineHeight: 1.06 }}>No implementamos software. <span className="omna-flow">Construimos inteligencia</span> para tu operación.</h2>
               <p style={{ marginTop: 20, maxWidth: 620, fontSize: "1.12rem", lineHeight: 1.65, color: "var(--text-secondary)" }}>Cada implementación es acompañada personalmente. No vendemos una plataforma: construimos junto con tu equipo un Cerebro Digital que aprende continuamente y se vuelve más valioso con el tiempo.</p>
             </div>
-            <div data-reveal style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(150px,1fr))", gap: "22px 18px", marginTop: 46, padding: "32px 0", borderTop: "1px solid var(--border-subtle)", borderBottom: "1px solid var(--border-subtle)" }}>
-              <Stat value="Miles" label="Horas automatizadas" />
-              <Stat value="95%" label="Satisfacción" />
-              <Stat value="5–15x" label="Velocidad con IA" />
-            </div>
           </div>
         </section>
 
@@ -590,7 +616,7 @@ export default function LandingClient() {
               <div style={{ position: "relative" }}>
                 <h2 style={{ fontSize: "clamp(2rem,4.4vw,3.4rem)", fontWeight: 800, lineHeight: 1.08, letterSpacing: "-.02em", color: "#fff", maxWidth: "32ch", margin: "0 auto" }}>Pongamos tu operación en <span className="omna-flow">piloto automático</span>.</h2>
                 <div style={{ display: "flex", justifyContent: "center", marginTop: 32 }}>
-                  <Button variant="primary" size="lg" arrow onClick={openAgenda}>Agenda un diagnóstico</Button>
+                  <Button variant="primary" size="lg" arrow onClick={openAgenda}>Ponte en contacto</Button>
                 </div>
                 <p style={{ marginTop: 16, fontSize: ".95rem", color: "var(--text-muted)" }}>Una sesión para entender tu operación. Sin compromiso.</p>
               </div>
@@ -627,11 +653,11 @@ export default function LandingClient() {
             </div>
             <div>
               <div style={{ fontSize: ".78rem", letterSpacing: ".2em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: 16 }}>Empieza</div>
-              <Button variant="secondary" size="md" arrow onClick={openAgenda}>Agenda un diagnóstico</Button>
+              <Button variant="secondary" size="md" arrow onClick={openAgenda}>Ponte en contacto</Button>
             </div>
           </div>
           <div style={{ marginTop: 48, paddingTop: 24, borderTop: "1px solid var(--border-subtle)", display: "flex", flexWrap: "wrap", gap: 16, justifyContent: "space-between", color: "var(--text-muted)", fontSize: ".86rem" }}>
-            <span>© 2026 OMNA® · Marca registrada · Aviso de privacidad</span>
+            <span>© 2026 OMNA® · Marca registrada · <a href="/aviso-de-privacidad" style={{ color: "inherit", textDecoration: "underline", textUnderlineOffset: 3 }}>Aviso de privacidad</a></span>
             <span>Hacemos visible lo invisible.</span>
           </div>
         </div>
@@ -639,26 +665,130 @@ export default function LandingClient() {
 
       {/* ===== AGENDA MODAL ===== */}
       {modalOpen && (
-        <div style={{ position: "fixed", inset: 0, zIndex: 120, display: "flex", alignItems: "center", justifyContent: "center", padding: "clamp(16px,4vw,40px)", background: "rgba(8,1,14,.78)", backdropFilter: "blur(14px)", animation: "omnaFadeUp .4s var(--ease-out) both" }} onClick={() => setModalOpen(false)}>
-          <div onClick={(e) => e.stopPropagation()} style={{ position: "relative", width: "100%", maxWidth: 560, maxHeight: "92vh", overflowY: "auto", borderRadius: "var(--radius-2xl)", border: "1px solid var(--border-default)", background: "linear-gradient(160deg,#1E0930,#11011C)", boxShadow: "var(--shadow-lg)", animation: "omnaScaleIn .45s var(--ease-out) both" }}>
-            <button onClick={() => setModalOpen(false)} aria-label="Cerrar" style={{ position: "absolute", top: 18, right: 18, zIndex: 3, width: 38, height: 38, borderRadius: "50%", border: "1px solid var(--border-default)", background: "rgba(0,0,0,.3)", color: "var(--text-secondary)", cursor: "pointer", display: "grid", placeItems: "center" }}><X size={18} /></button>
-            <div style={{ padding: "clamp(28px,5vw,48px)" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
-                <Image src="/omna-core.png" alt="" width={28} height={28} style={{ objectFit: "contain" }} />
-                <span style={{ fontSize: ".76rem", letterSpacing: ".2em", textTransform: "uppercase", color: "var(--text-muted)" }}>Diagnóstico OMNA</span>
-              </div>
-              <h3 style={{ fontSize: "clamp(1.5rem,3.4vw,2rem)", fontWeight: 800, lineHeight: 1.1, color: "#fff" }}>Agenda tu diagnóstico.</h3>
-              <p style={{ marginTop: 12, color: "var(--text-secondary)", lineHeight: 1.55 }}>Cuéntanos de tu empresa. Agendamos una sesión para entender tu operación y dónde los agentes moverían más valor.</p>
-              <div style={{ marginTop: 20, minHeight: 480 }}
-                data-fillout-id={FILLOUT_ID}
-                data-fillout-embed-type="standard"
-                data-fillout-inherit-parameters=""
-                data-fillout-dynamic-resize=""
-                data-fillout-domain={FILLOUT_DOMAIN}
-              />
-              <p style={{ marginTop: 14, fontSize: ".88rem", color: "var(--text-muted)", textAlign: "center" }}>Sin compromiso. Te respondemos en menos de 24 horas.</p>
+        <div data-agenda style={{ position: "fixed", inset: 0, zIndex: 150, display: "grid", gridTemplateColumns: "44% 56%", background: "#160221", animation: "omnaFadeUp .4s var(--ease-out) both", overflow: "auto" }}>
+          {/* LEFT · brand panel */}
+          <aside data-agenda-left style={{ position: "relative", overflowY: "auto", padding: "clamp(28px,3.4vw,56px)", display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 28, background: "#160221" }}>
+            <div aria-hidden style={{ position: "absolute", inset: 0, background: "url('/planta-equipo.jpg') center / cover no-repeat", opacity: 0.5 }} />
+            <div aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(11,1,18,.62), rgba(11,1,18,.34) 42%, rgba(11,1,18,.78))" }} />
+            <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
+              <button onClick={closeAgenda} style={{ display: "inline-flex", alignItems: "center", gap: 8, height: 42, padding: "0 20px 0 16px", borderRadius: "var(--radius-pill)", border: "1px solid var(--border-default)", background: "rgba(255,255,255,.04)", color: "#fff", fontSize: ".95rem", fontWeight: 500, cursor: "pointer" }}><ChevronLeft size={18} />Volver</button>
             </div>
-          </div>
+            <div style={{ position: "relative" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <Image src="/omna-core.png" alt="OMNA" width={38} height={38} style={{ objectFit: "contain" }} />
+                <span style={{ fontWeight: 800, fontSize: "1.7rem", letterSpacing: "-.02em", color: "#fff", lineHeight: 1 }}>omna</span>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 30 }}>
+                <span style={{ color: "var(--omna-orange)", fontSize: "1.15rem", letterSpacing: 2 }}>★★★★★</span>
+                <span style={{ color: "#F4ECFB", fontSize: ".95rem", textShadow: "0 1px 12px rgba(12,1,20,.6)" }}>5.0 en satisfacción de clientes</span>
+              </div>
+              <h2 style={{ marginTop: 22, fontSize: "clamp(2.2rem,3.6vw,3.4rem)", fontWeight: 800, lineHeight: 1.04, letterSpacing: "-.02em", color: "#fff", maxWidth: "14ch" }}>Inteligencia artificial para tu <span className="omna-flow">operación</span>.</h2>
+              <div style={{ display: "grid", gap: 18, marginTop: 34, maxWidth: "44ch" }}>
+                {[
+                  { icon: <Rocket size={22} />, t: "Agentes en producción en semanas, con acompañamiento experto." },
+                  { icon: <ShieldCheck size={22} />, t: "Control, trazabilidad y tus datos en tu región." },
+                  { icon: <HeartHandshake size={22} />, t: "La confianza de equipos que crecen con claridad." },
+                ].map((b) => (
+                  <div key={b.t} style={{ display: "flex", alignItems: "flex-start", gap: 14 }}>
+                    <span style={{ color: "var(--omna-orange)", flex: "none", marginTop: 2 }}>{b.icon}</span>
+                    <span style={{ color: "#F4ECFB", fontSize: "1.02rem", lineHeight: 1.5, textShadow: "0 1px 12px rgba(12,1,20,.6)" }}>{b.t}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div style={{ position: "relative" }}>
+              <div style={{ height: 1, background: "rgba(223,195,244,.22)", marginBottom: 26 }} />
+              <div style={{ display: "flex", gap: "clamp(24px,4vw,52px)" }}>
+                {[["+10K", "Procesos automatizados"], ["99%", "Eficiencia operativa"], ["24/7", "Inteligencia activa"]].map(([v, l]) => (
+                  <div key={l}>
+                    <div style={{ fontSize: "1.8rem", fontWeight: 800, color: "#fff", letterSpacing: "-.02em", textShadow: "0 1px 12px rgba(12,1,20,.6)" }}>{v}</div>
+                    <div style={{ fontSize: ".82rem", color: "#CBB8E0", marginTop: 4, textShadow: "0 1px 10px rgba(12,1,20,.6)" }}>{l}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+
+          {/* RIGHT · form panel */}
+          <section style={{ position: "relative", background: "rgba(12,1,20,.55)", backdropFilter: "blur(10px)", WebkitBackdropFilter: "blur(10px)", color: "#fff", display: "flex", flexDirection: "column", padding: "clamp(28px,3.6vw,64px)", overflowY: "auto", borderLeft: "1px solid var(--border-subtle)" }}>
+            <button onClick={closeAgenda} aria-label="Cerrar" style={{ position: "absolute", top: 22, right: 22, width: 40, height: 40, borderRadius: "50%", border: "1px solid var(--border-default)", background: "rgba(255,255,255,.04)", color: "#fff", cursor: "pointer", display: "grid", placeItems: "center" }}><X size={18} /></button>
+            <div style={{ width: "100%", maxWidth: 560, margin: "auto" }}>
+              {sent ? (
+                <div style={{ padding: "14px 0" }}>
+                  <div style={{ width: 76, height: 76, borderRadius: "50%", background: "var(--accent-soft)", border: "1px solid var(--omna-orange)", display: "grid", placeItems: "center", boxShadow: "var(--shadow-glow-orange)" }}><Check size={34} style={{ color: "var(--omna-orange)" }} /></div>
+                  <h2 style={{ marginTop: 26, fontSize: "clamp(2rem,3.4vw,2.7rem)", fontWeight: 800, lineHeight: 1.06, letterSpacing: "-.02em" }}>Solicitud recibida.</h2>
+                  <p style={{ marginTop: 16, fontSize: "1.05rem", lineHeight: 1.6, color: "var(--text-secondary)", maxWidth: "42ch" }}>Gracias, {form.nombre || "por escribirnos"}. Te contactamos en menos de 24 horas para agendar tu diagnóstico y conocer cómo funciona tu operación.</p>
+                  <button onClick={closeAgenda} style={{ marginTop: 32, height: 56, padding: "0 30px", borderRadius: "var(--radius-pill)", border: "none", background: "var(--omna-orange)", color: "#fff", fontWeight: 600, fontSize: "1.05rem", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 10, boxShadow: "var(--shadow-glow-orange)" }}>Volver al sitio <span aria-hidden>↗</span></button>
+                </div>
+              ) : (
+                <div>
+                  <div style={{ display: "flex", gap: 8 }}>
+                    {[1, 2, 3].map((n) => (
+                      <div key={n} style={{ flex: 1, height: 5, borderRadius: 3, background: step >= n ? "var(--omna-orange)" : "rgba(223,195,244,.16)", transition: "background .4s var(--ease-out)" }} />
+                    ))}
+                  </div>
+                  <div style={{ marginTop: 22, fontSize: ".78rem", letterSpacing: ".22em", textTransform: "uppercase", color: "var(--omna-orange)", fontWeight: 600 }}>Paso {step} de 3</div>
+                  <h2 style={{ marginTop: 10, fontSize: "clamp(1.9rem,3.4vw,2.7rem)", fontWeight: 800, lineHeight: 1.06, letterSpacing: "-.02em" }}>{step === 1 ? "Ponte en contacto" : step === 2 ? "Sobre tu empresa" : "¿Qué quieres lograr?"}</h2>
+                  <p style={{ marginTop: 12, fontSize: "1.05rem", color: "var(--text-secondary)" }}>{step === 1 ? "Cuéntanos un poco sobre ti." : step === 2 ? "Ahora platícanos sobre tu empresa." : "Unos detalles más y listo."}</p>
+
+                  <form onSubmit={advance} style={{ marginTop: 30 }}>
+                    {step === 1 && (
+                      <div style={{ display: "grid", gap: 20 }}>
+                        <label style={{ display: "grid", gap: 9 }}><span style={labelSpan}>País</span>
+                          <select value={form.pais} onChange={setField("pais")} required style={selectStyle}>
+                            <option value="">Selecciona tu país</option>
+                            {["México", "Colombia", "Argentina", "Chile", "Perú", "España", "Estados Unidos", "Otro"].map((o) => <option key={o}>{o}</option>)}
+                          </select>
+                        </label>
+                        <div data-2col-form style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                          <label style={{ display: "grid", gap: 9 }}><span style={labelSpan}>Nombre</span><input value={form.nombre} onChange={setField("nombre")} required placeholder="Tu nombre" style={inputStyle} /></label>
+                          <label style={{ display: "grid", gap: 9 }}><span style={labelSpan}>Apellido</span><input value={form.apellido} onChange={setField("apellido")} required placeholder="Tu apellido" style={inputStyle} /></label>
+                        </div>
+                        <label style={{ display: "grid", gap: 9 }}><span style={labelSpan}>Correo</span><input value={form.email} onChange={setField("email")} type="email" required placeholder="tu@empresa.com" style={inputStyle} /></label>
+                        <label style={{ display: "grid", gap: 9 }}><span style={labelSpan}>Teléfono / WhatsApp</span><input value={form.telefono} onChange={setField("telefono")} required placeholder="+52 55 1234 5678" style={inputStyle} /></label>
+                      </div>
+                    )}
+                    {step === 2 && (
+                      <div style={{ display: "grid", gap: 20 }}>
+                        <label style={{ display: "grid", gap: 9 }}><span style={labelSpan}>Nombre de tu empresa</span><input value={form.empresa} onChange={setField("empresa")} required placeholder="Nombre de tu empresa" style={inputStyle} /></label>
+                        <label style={{ display: "grid", gap: 9 }}><span style={labelSpan}>¿Qué tipo de empresa son?</span>
+                          <select value={form.tipoEmpresa} onChange={setField("tipoEmpresa")} required style={selectStyle}>
+                            <option value="">Selecciona una opción</option>{TIPO_EMPRESA.map((o) => <option key={o}>{o}</option>)}
+                          </select>
+                        </label>
+                        <label style={{ display: "grid", gap: 9 }}><span style={labelSpan}>Rango de facturación</span>
+                          <select value={form.facturacion} onChange={setField("facturacion")} required style={selectStyle}>
+                            <option value="">Selecciona un rango</option>{FACTURACION.map((o) => <option key={o}>{o}</option>)}
+                          </select>
+                        </label>
+                      </div>
+                    )}
+                    {step === 3 && (
+                      <div style={{ display: "grid", gap: 20 }}>
+                        <label style={{ display: "grid", gap: 9 }}><span style={labelSpan}>¿Cuál es tu mayor cuello de botella hoy?</span>
+                          <select value={form.cuelloBotella} onChange={setField("cuelloBotella")} required style={selectStyle}>
+                            <option value="">Selecciona una opción</option>{CUELLO_BOTELLA.map((o) => <option key={o}>{o}</option>)}
+                          </select>
+                        </label>
+                        <label style={{ display: "grid", gap: 9 }}><span style={labelSpan}>¿Cómo te enteraste de nosotros?</span>
+                          <select value={form.origen} onChange={setField("origen")} required style={selectStyle}>
+                            <option value="">Selecciona una opción</option>{ORIGEN.map((o) => <option key={o}>{o}</option>)}
+                          </select>
+                        </label>
+                        <div style={{ display: "flex", gap: 12, alignItems: "flex-start", padding: 16, borderRadius: 14, background: "rgba(254,101,29,.1)", border: "1px solid rgba(254,101,29,.28)" }}><CalendarCheck size={20} style={{ color: "var(--omna-orange)", flex: "none", marginTop: 2 }} /><span style={{ fontSize: ".95rem", lineHeight: 1.5, color: "var(--text-secondary)" }}>Al enviar, te contactamos en menos de 24 horas para agendar tu diagnóstico. Sin compromiso.</span></div>
+                      </div>
+                    )}
+                    <div style={{ display: "flex", alignItems: "center", gap: 16, marginTop: 32 }}>
+                      {step > 1 && (
+                        <button type="button" onClick={back} style={{ height: 56, padding: "0 24px", borderRadius: "var(--radius-pill)", border: "1px solid var(--border-default)", background: "transparent", color: "#fff", fontWeight: 600, fontSize: "1rem", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 8 }}><ChevronLeft size={18} />Atrás</button>
+                      )}
+                      <button type="submit" disabled={submitting} style={{ flex: 1, height: 56, borderRadius: "var(--radius-pill)", border: "none", background: "var(--omna-orange)", color: "#fff", fontWeight: 600, fontSize: "1.05rem", cursor: submitting ? "wait" : "pointer", opacity: submitting ? 0.7 : 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 10, boxShadow: "var(--shadow-glow-orange)" }}>{step < 3 ? "Continuar" : submitting ? "Enviando…" : "Enviar solicitud"} <span aria-hidden>↗</span></button>
+                    </div>
+                  </form>
+                </div>
+              )}
+            </div>
+          </section>
         </div>
       )}
     </div>
