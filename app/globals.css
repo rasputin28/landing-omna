@@ -223,6 +223,9 @@ button, input, select, textarea { font: inherit; color: inherit; }
 [data-q-card] { transition: transform .4s var(--ease-out), border-color .4s var(--ease-out), background .4s var(--ease-out); }
 [data-q-card]:hover { transform: translateY(-4px); border-color: var(--border-strong) !important; }
 
+/* Hamburger: hidden on desktop, shown on mobile (see max-width:820px). */
+[data-menu-btn] { display: none; }
+
 @media (max-width:900px) {
   [data-hero-grid] { grid-template-columns: 1fr !important; }
   [data-2col] { grid-template-columns: 1fr !important; }
@@ -236,12 +239,16 @@ button, input, select, textarea { font: inherit; color: inherit; }
 @media (max-width:960px) {
   [data-agenda] { grid-template-columns: 1fr !important; }
   [data-agenda-left] { min-height: auto !important; }
+  /* Form first so a phone user lands on the fields, not the brand panel. */
+  [data-agenda-form] { order: -1; border-left: none !important; }
   [data-int-grid] { grid-template-columns: 1fr 1fr !important; }
 }
 @media (max-width:560px) {
   [data-chip] { font-size: .66rem !important; padding: 5px 9px !important; }
   [data-int-grid] { grid-template-columns: 1fr !important; }
   [data-2col-form] { grid-template-columns: 1fr !important; }
+  [data-compare-row] { grid-template-columns: 1fr !important; }
+  [data-compare-row] [data-compare-arrow] { transform: rotate(90deg); }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

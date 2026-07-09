@@ -519,9 +519,9 @@ export default function LandingClient() {
                   <p style={{ marginTop: 18, color: "var(--text-secondary)", lineHeight: 1.6 }}>{d.desc}</p>
                   <div style={{ display: "grid", gap: 10, marginTop: 22 }}>
                     {d.rows.map((r, k) => (
-                      <div key={k} style={{ display: "grid", gridTemplateColumns: "1fr 22px 1fr", alignItems: "center", gap: 8 }}>
+                      <div key={k} data-compare-row style={{ display: "grid", gridTemplateColumns: "1fr 22px 1fr", alignItems: "center", gap: 8 }}>
                         <div style={{ padding: "12px 14px", borderRadius: "var(--radius-sm)", background: "rgba(255,255,255,.03)", border: "1px solid var(--border-subtle)", color: "#b3aabf", fontSize: ".9rem", lineHeight: 1.35 }}>{r[0]}</div>
-                        <ArrowRight size={18} style={{ color: "var(--omna-orange)", margin: "0 auto" }} />
+                        <ArrowRight data-compare-arrow size={18} style={{ color: "var(--omna-orange)", margin: "0 auto" }} />
                         <div style={{ padding: "12px 14px", borderRadius: "var(--radius-sm)", background: "var(--accent-soft)", border: "1px solid rgba(254,101,29,.28)", color: "#fff", fontSize: ".9rem", lineHeight: 1.35 }}>{r[1]}</div>
                       </div>
                     ))}
@@ -710,7 +710,7 @@ export default function LandingClient() {
           </aside>
 
           {/* RIGHT · form panel */}
-          <section style={{ position: "relative", background: "rgba(12,1,20,.55)", backdropFilter: "blur(10px)", WebkitBackdropFilter: "blur(10px)", color: "#fff", display: "flex", flexDirection: "column", padding: "clamp(28px,3.6vw,64px)", overflowY: "auto", borderLeft: "1px solid var(--border-subtle)" }}>
+          <section data-agenda-form style={{ position: "relative", background: "rgba(12,1,20,.55)", backdropFilter: "blur(10px)", WebkitBackdropFilter: "blur(10px)", color: "#fff", display: "flex", flexDirection: "column", padding: "clamp(28px,3.6vw,64px)", overflowY: "auto", borderLeft: "1px solid var(--border-subtle)" }}>
             <button onClick={closeAgenda} aria-label="Cerrar" style={{ position: "absolute", top: 22, right: 22, width: 40, height: 40, borderRadius: "50%", border: "1px solid var(--border-default)", background: "rgba(255,255,255,.04)", color: "#fff", cursor: "pointer", display: "grid", placeItems: "center" }}><X size={18} /></button>
             <div style={{ width: "100%", maxWidth: 560, margin: "auto" }}>
               {sent ? (
