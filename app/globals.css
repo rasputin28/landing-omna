@@ -238,9 +238,10 @@ button, input, select, textarea { font: inherit; color: inherit; }
 }
 @media (max-width:960px) {
   [data-agenda] { grid-template-columns: 1fr !important; }
-  [data-agenda-left] { min-height: auto !important; }
-  /* Form first so a phone user lands on the fields, not the brand panel. */
-  [data-agenda-form] { order: -1; border-left: none !important; }
+  /* Clean full-screen form on mobile — the desktop brand panel stacked under
+     the form reads as two fragmented halves, so drop it here. */
+  [data-agenda-left] { display: none !important; }
+  [data-agenda-form] { border-left: none !important; }
   [data-int-grid] { grid-template-columns: 1fr 1fr !important; }
 }
 @media (max-width:560px) {
