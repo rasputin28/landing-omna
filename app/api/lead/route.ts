@@ -44,7 +44,7 @@ export async function POST(req: Request) {
     "Tamaño de empresa": lead.facturacion,
     "¿Mayor cuello de botella?": lead.cuelloBotella,
     "¿Cómo te enteraste de nosotros?": lead.origen,
-    "utm_source": lead.utmSource,
+    "Fuente": lead.utmSource,
   };
   const fields: Record<string, string> = {};
   for (const [k, v] of Object.entries(raw)) {
